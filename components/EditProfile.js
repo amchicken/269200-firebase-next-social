@@ -5,7 +5,6 @@ import { useForm } from "@utils/useForm";
 export default function EditProfile() {
   const { user, updateUser } = useContext(UserContext);
   const [userdetail, onChange] = useForm(user);
-  console.log(userdetail);
 
   const updateUserDetails = async (e) => {
     e.preventDefault();

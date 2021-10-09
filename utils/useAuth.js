@@ -39,16 +39,8 @@ export const useAuth = () => {
   const updateUser = (userobject) => {
     const data = { ...userobject };
     delete data.id;
-    console.log(data);
-    const template = {
-      ...auth.currentUser,
-      photoURL: data.photoURL === "" ? null : data.photoURL,
-      displayName: data.displayName === "" ? null : data.displayName,
-    };
-    console.log(template);
     firestore.collection("usernames").doc(userobject.id).set(data);
-    setUser(userobject);
-    auth.updateCurrentUser(template);
+    auth.currentUser.updateProfile(data).then(() => setUser(userobject));
   };
 
   return [user, loading, updateUser];
