@@ -11,7 +11,7 @@ export default function PostFeed() {
       const ref = firestore
         .collection("posts")
         .orderBy("createdAt", "desc")
-        .limit(1);
+        .limit(2);
 
       const posts = (await ref.get()).docs.map((res) => {
         return {
@@ -21,6 +21,8 @@ export default function PostFeed() {
       });
       setPosts(posts);
     };
+
+    getData();
 
     const interval = setInterval(() => {
       getData();
