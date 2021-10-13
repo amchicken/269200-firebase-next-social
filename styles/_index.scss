@@ -1,8 +1,11 @@
 .index {
-  justify-content: space-between;
+  justify-content: center;
   &__left {
     width: 280px;
     padding-top: 1rem;
+    position: fixed;
+    left: 0;
+
     &__menu {
       margin-left: -1rem;
       list-style: none;
@@ -44,7 +47,8 @@
   }
 
   &__right {
-    justify-self: flex-end;
+    position: fixed;
+    right: 0;
     width: 280px;
     @media only screen and (max-width: 680px) {
       display: none;

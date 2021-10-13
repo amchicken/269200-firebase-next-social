@@ -90,7 +90,19 @@ function Post({ post, user }) {
         </div>
         <PostMenu post={post} user={user} />
       </div>
-      <div className="card__content">{post.content}</div>
+      <div className="card__content">
+        <span>{post.content}</span>
+        {post.photoURL && (
+          <div>
+            <Image
+              src={post.photoURL}
+              width="680"
+              height="640"
+              alt={post.content}
+            />
+          </div>
+        )}
+      </div>
       <div className="card__panel">
         <div>
           {post.likes > 0 ? (

@@ -9,6 +9,7 @@ $font-secondary: "Bebas Neue", cursive;
 $background-color: #18191a;
 $height-nav: 56px;
 $background-nav: #232526;
+$background-input: #3a3b3c;
 
 * {
   border: 0;
@@ -59,6 +60,8 @@ b {
   height: 100vh;
   background-color: $background-color;
   color: whitesmoke;
+  overflow-y: scroll;
+  position: relative;
 }
 
 button {
@@ -74,11 +77,13 @@ input {
   height: 1.5rem;
   padding: 0.25rem;
   transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
+  background: $background-input;
+  color: white;
 
   &:focus {
     outline: none;
-    border: 1.2px solid rgb(56, 36, 235);
-    box-shadow: rgba(56, 36, 235, 0.24) 0px 3px 8px;
+    border: 1.2px solid rgb(104, 104, 104);
+    box-shadow: rgba(224, 224, 224, 0.24) 0px 3px 8px;
   }
 }
 
@@ -95,6 +100,10 @@ input {
   img {
     border-radius: 2rem;
   }
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 @import "auth";
