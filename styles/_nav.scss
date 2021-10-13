@@ -1,0 +1,71 @@
+$nav-offset: 6px;
+
+.nav {
+  display: flex;
+  height: 56px;
+  padding: $nav-offset 1rem;
+  color: white;
+  background: $background-nav;
+  position: fixed;
+  justify-content: space-between;
+  width: 100vw;
+  border-bottom: 1px solid rgb(53, 53, 53);
+  &__left {
+    position: relative;
+    width: 280px;
+    .logo {
+      position: relative;
+      height: calc(56px - $nav-offset * 2);
+      width: calc(56px - $nav-offset * 2);
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      filter: invert(100);
+      :hover {
+        filter: opacity(0.9);
+      }
+    }
+  }
+
+  &__middle {
+    display: block;
+    @media only screen and (max-width: 960px) {
+      display: none;
+    }
+  }
+
+  &__right {
+    position: relative;
+    width: 280px;
+    padding-right: 1rem;
+    gap: $nav-offset;
+    justify-content: flex-end;
+    align-items: center;
+    display: flex;
+
+    &__profile {
+      gap: $nav-offset;
+      display: flex;
+      align-items: center;
+      display: flex;
+      cursor: pointer;
+      &__photo {
+        position: relative;
+        height: 2rem;
+        width: 2rem;
+        img {
+          border-radius: 2rem;
+        }
+      }
+      border-radius: 2rem;
+      padding: 3px 0.5rem 3px 3px;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    &__group {
+      gap: $nav-offset;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

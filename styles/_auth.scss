@@ -1,0 +1,63 @@
+.auth {
+  background-color: $background-color;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  flex-wrap: wrap;
+  padding: 3rem;
+  gap: 3rem;
+
+  &__left {
+    flex: 4;
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__right {
+    height: 100%;
+    flex: 6;
+    display: grid;
+    place-items: center;
+    max-height: 400px;
+    align-self: center;
+    form {
+      background-color: whitesmoke;
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 20px;
+      padding: 1.5rem;
+      gap: 1.2rem;
+      justify-content: space-around;
+      input {
+        height: 2rem;
+      }
+
+      button {
+        height: 2rem;
+        border-radius: 5px;
+        color: white;
+      }
+    }
+
+    &__register {
+      background-color: rgb(70, 70, 255);
+      &:hover {
+        background-color: rgb(56, 56, 255);
+      }
+    }
+
+    &__toside {
+      background-color: rgb(0, 146, 0);
+      width: 85%;
+      align-self: center;
+      &:hover {
+        background-color: rgb(0, 110, 0);
+      }
+    }
+  }
+}

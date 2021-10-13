@@ -1,0 +1,53 @@
+.index {
+  justify-content: space-between;
+  &__left {
+    width: 280px;
+    padding-top: 1rem;
+    &__menu {
+      margin-left: -1rem;
+      list-style: none;
+      padding-left: 1.25rem;
+      padding-right: calc($nav-offset + 0.25rem);
+      gap: 0.5rem;
+      li {
+        display: flex;
+        height: 3.5rem;
+        position: relative;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.5rem;
+        padding-left: 0.75rem;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgb(73, 73, 73);
+        }
+      }
+      &__photo {
+        height: 2.5rem;
+        width: 2.5rem;
+        img {
+          border-radius: 2.5rem;
+        }
+      }
+    }
+
+    @media only screen and (max-width: 960px) {
+      display: none;
+    }
+  }
+
+  &__center {
+    width: 100%;
+    max-width: 680px;
+  }
+
+  &__right {
+    justify-self: flex-end;
+    width: 280px;
+    @media only screen and (max-width: 680px) {
+      display: none;
+    }
+  }
+}

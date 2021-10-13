@@ -1,15 +1,37 @@
 import { UserContext } from "@utils/context";
-import { useContext } from "react";
+import { storage } from "@lib/firebase";
+import { useContext, useState } from "react";
 import { useForm } from "@utils/useForm";
+import Image from "next/image";
 
 export default function EditProfile() {
   const { user, updateUser } = useContext(UserContext);
   const [userdetail, onChange] = useForm(user);
+  const [image, setImage] = useState(null);
+  const [file, setFile] = useState(null);
 
-  const updateUserDetails = async (e) => {
-    e.preventDefault();
-    updateUser(userdetail);
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      if (file.size > 3145728) {
+        console.log("FILE TO LARGE !");
+        return;
+      }
+      setImage(URL.createObjectURL(event.target.files[0]));
+      setFile(event.target.files[0]);
+    }
   };
+
+  function updateUserDetails(e) {
+    e.preventDefault();
+    const ref = storage.ref(`${user.id}/profile`);
+    const uploadTask = ref.put(file);
+    uploadTask.on("state_changed", console.log, console.error, () => {
+      ref.getDownloadURL().then((url) => {
+        updateUser({ ...userdetail, photoURL: url });
+      });
+    });
+  }
 
   return (
     <div>
@@ -31,11 +53,14 @@ export default function EditProfile() {
         />
         photoURL
         <input
-          type="text"
+          type="file"
           name="photoURL"
-          value={userdetail.photoURL || ""}
-          onChange={onChange}
+          onChange={onImageChange}
+          accept="image/jpeg,image/png,image/gif"
         />
+        <div style={{ width: "100px", height: "100px", position: "relative" }}>
+          {image && <Image src={image} alt="preview image" layout="fill" />}
+        </div>
         <button type="submit">UpdateProfile</button>
       </form>
     </div>

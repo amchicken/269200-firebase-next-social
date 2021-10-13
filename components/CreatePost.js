@@ -41,6 +41,9 @@ export default function CreatePost() {
         onChange={onChange}
         name="content"
       />
+
+      <input type="file" accept="image/png" />
+
       <button type="submit">create post</button>
     </form>
   );

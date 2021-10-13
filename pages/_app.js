@@ -1,8 +1,9 @@
-import "../styles/globals.css";
+import "../styles/globals.scss";
 import { useAuth } from "@utils/useAuth";
 import { UserContext } from "@utils/context";
 import Auth from "@components/Auth";
 import EditProfile from "@components/EditProfile";
+import Header from "@components/Header";
 
 function MyApp({ Component, pageProps }) {
   const [user, loading, updateUser] = useAuth();
@@ -12,6 +13,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <UserContext.Provider value={{ user, updateUser }}>
+      <Header />
       {!user.displayName ? (
         <div>
           FRIST TIME update displayName <EditProfile />
