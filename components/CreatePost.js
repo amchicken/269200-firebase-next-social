@@ -39,14 +39,18 @@ export default function CreatePost() {
 
   function createPost(e) {
     e.preventDefault();
-    const ref = storage.ref(`${user.id}/posts/${file.name}`);
-    const uploadTask = ref.put(file);
-    uploadTask.on("state_changed", console.log, console.error, () => {
-      ref.getDownloadURL().then((url) => {
-        commitPost(url);
-        setImage(null);
+    if (file) {
+      const ref = storage.ref(`${user.id}/posts/${file.name}`);
+      const uploadTask = ref.put(file);
+      uploadTask.on("state_changed", console.log, console.error, () => {
+        ref.getDownloadURL().then((url) => {
+          commitPost(url);
+          setImage(null);
+        });
       });
-    });
+    } else {
+      commitPost(null);
+    }
   }
 
   const commitPost = async (url) => {
@@ -68,7 +72,6 @@ export default function CreatePost() {
         name="content"
         placeholder={`What's on your mind, ${user.displayName}`}
       />
-
       <input
         type="file"
         onChange={onImageChange}
