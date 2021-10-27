@@ -17,7 +17,7 @@ export default function Index() {
         <div className="index__left">
           <ul className="index__left__menu">
             <li>
-              <div className="relative index__left__menu__photo">
+              <div className="relative index__left__menu__photo photo">
                 <Image
                   src={user.photoURL || "/default.png"}
                   alt="profile-photo"

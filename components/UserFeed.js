@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { firestore, arrayUnion, arrayRemove, Increment } from "@lib/firebase";
-import JSONPretty from "react-json-pretty";
-import JSONPrettyMon from "react-json-pretty/themes/monikai.css";
 import { UserContext } from "@utils/context";
 import { useClickOutSide } from "@utils/useClickOutSide";
 import Image from "next/image";
@@ -11,11 +9,10 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ReactTimeAgo from "react-time-ago";
 
-export default function PostFeed() {
+export default function UserFeed({ id }) {
   const isCurrent = useRef(true);
-  const { user } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
-  const [limit, setLimit] = useState(2);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     return () => {
@@ -25,11 +22,12 @@ export default function PostFeed() {
 
   useEffect(() => {
     let unsubscribe;
-    if (isCurrent.current) {
+    if (isCurrent) {
       unsubscribe = firestore
         .collection("posts")
+        .where("createdBy", "==", id)
         .orderBy("createdAt", "desc")
-        .limit(limit)
+        .limit(2)
         .onSnapshot((collection) => {
           const posts = collection.docs.map((res) => {
             return {
@@ -43,15 +41,14 @@ export default function PostFeed() {
     return () => {
       unsubscribe = undefined;
     };
-  }, [limit]);
+  }, [id]);
 
   return (
     <div className="post__container">
       {posts.map((post) => (
         <Post post={post} key={post.id} user={user} />
       ))}
-
-      <button onClick={() => setLimit((c) => c + 2)}>Loadmore</button>
+      {/* <JSONPretty data={posts} theme={JSONPrettyMon} /> */}
     </div>
   );
 }

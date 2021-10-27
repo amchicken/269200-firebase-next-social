@@ -24,6 +24,46 @@ $nav-offset: 6px;
         filter: opacity(0.9);
       }
     }
+
+    &__serchbox {
+      flex: 1;
+      padding-left: 0.3rem;
+      input {
+        height: calc(56px - $nav-offset * 2);
+        border-radius: 40px;
+        width: 100%;
+        padding: 0 calc($nav-offset * 2);
+      }
+      ul {
+        width: 280px;
+        position: absolute;
+        background-color: $background-nav;
+        top: calc(56px - $nav-offset - 1px);
+        border-radius: 0 0 5px 5px;
+        list-style: none;
+        left: 0;
+        li {
+          display: flex;
+          height: calc(56px - $nav-offset);
+          margin-left: -40px;
+          padding: calc($nav-offset * 2);
+          overflow: hidden;
+          align-items: center;
+          gap: $nav-offset;
+
+          &:hover {
+            background-color: $background-input;
+          }
+          &:last-child {
+            border-radius: 0 0 5px 5px;
+          }
+          .photo__li {
+            width: 1.5rem;
+            height: 1.5rem;
+          }
+        }
+      }
+    }
   }
 
   &__middle {

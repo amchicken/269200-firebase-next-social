@@ -26,11 +26,13 @@ export default function EditProfile() {
     e.preventDefault();
     const ref = storage.ref(`${user.id}/profile`);
     const uploadTask = ref.put(file);
-    uploadTask.on("state_changed", console.log, console.error, () => {
-      ref.getDownloadURL().then((url) => {
-        updateUser({ ...userdetail, photoURL: url });
+    if (file) {
+      uploadTask.on("state_changed", () => {
+        ref.getDownloadURL().then((url) => {
+          if (url) updateUser({ ...userdetail, photoURL: url });
+        });
       });
-    });
+    } else updateUser(userdetail);
   }
 
   return (

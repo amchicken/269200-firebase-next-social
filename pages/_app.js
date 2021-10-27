@@ -4,10 +4,14 @@ import { UserContext } from "@utils/context";
 import Auth from "@components/Auth";
 import EditProfile from "@components/EditProfile";
 import Header from "@components/Header";
+import TimeAgo from "javascript-time-ago";
+
+import en from "javascript-time-ago/locale/en.json";
+
+TimeAgo.addDefaultLocale(en);
 
 function MyApp({ Component, pageProps }) {
   const [user, loading, updateUser] = useAuth();
-
   if (loading) return <div>Loading...</div>;
   if (!user) return <Auth />;
 
