@@ -4,6 +4,8 @@ import { useContext, useState } from "react";
 import { useForm } from "@utils/useForm";
 import Image from "next/image";
 import toast from "react-hot-toast";
+import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function EditProfile() {
   const { user, updateUser } = useContext(UserContext);
@@ -37,33 +39,65 @@ export default function EditProfile() {
   }
 
   return (
-    <div>
-      <form onSubmit={updateUserDetails}>
-        displayName
-        <input
-          type="text"
-          name="displayName"
-          value={userdetail.displayName || ""}
-          onChange={onChange}
-          required
-        />
-        bio
-        <input
-          type="text"
-          name="bio"
-          value={userdetail.bio || ""}
-          onChange={onChange}
-        />
-        photoURL
-        <input
-          type="file"
-          name="photoURL"
-          onChange={onImageChange}
-          accept="image/jpeg,image/png,image/gif"
-        />
-        <div style={{ width: "100px", height: "100px", position: "relative" }}>
-          {image && <Image src={image} alt="preview image" layout="fill" />}
+    <div className="profile__edit__container">
+      <form onSubmit={updateUserDetails} className="card form__create max-w">
+        <div className="form__create__title-group">
+          <h2>displayName</h2>
+          <input
+            type="text"
+            name="displayName"
+            value={userdetail.displayName || ""}
+            onChange={onChange}
+            required
+          />
         </div>
+        <div className="form__create__title-group">
+          <h2>bio</h2>
+          <input
+            type="text"
+            name="bio"
+            value={userdetail.bio || ""}
+            onChange={onChange}
+          />
+        </div>
+        {!image && (
+          <div className="form__create__upload-group">
+            <div className="image-upload">
+              <input
+                type="file"
+                onChange={onImageChange}
+                accept="image/jpeg,image/png,image/gif"
+              />
+              <div className="custom-file-upload">
+                <InsertPhotoIcon />
+                Upload profile picture
+              </div>
+            </div>
+          </div>
+        )}
+        {image && (
+          <>
+            <div className="form__create__image-group">
+              <button
+                onClick={() => {
+                  setFile(null);
+                  setImage(null);
+                }}
+                className="form__create__image-group__clear-btn"
+              >
+                <CloseIcon />
+              </button>
+              <div className="post__photo">
+                <Image
+                  src={image}
+                  alt="preview image"
+                  width="680"
+                  height="640"
+                />
+              </div>
+            </div>
+          </>
+        )}
         <button type="submit">UpdateProfile</button>
       </form>
     </div>

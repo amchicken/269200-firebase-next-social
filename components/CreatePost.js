@@ -3,8 +3,8 @@ import { UserContext } from "@utils/context";
 import { useForm } from "@utils/useForm";
 import { firestore, serverTimestamp, storage } from "@lib/firebase";
 import Image from "next/image";
-import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import toast from "react-hot-toast";
+import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function CreatePost() {

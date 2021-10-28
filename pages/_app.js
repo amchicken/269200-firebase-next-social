@@ -22,8 +22,9 @@ function MyApp({ Component, pageProps }) {
         <Header />
         <Toaster />
         {!user.displayName ? (
-          <div>
-            FRIST TIME update displayName <EditProfile />
+          <div className="full-size">
+            <h1>Please enter your displayName</h1>
+            <EditProfile />
           </div>
         ) : (
           <Component {...pageProps} />

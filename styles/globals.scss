@@ -106,6 +106,37 @@ input {
   display: none;
 }
 
+.profile__edit__container {
+  display: flex;
+  background: $background-color;
+  color: white;
+  justify-content: center;
+  form {
+    button {
+      padding: 0.5rem 1rem;
+      &:hover {
+        background-color: $background-input;
+      }
+    }
+  }
+}
+
+.full-size {
+  color: white;
+  background: $background-color;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.max-w {
+  width: 100%;
+  max-width: 680px;
+}
+
 @import "auth";
 @import "nav";
 @import "index";
