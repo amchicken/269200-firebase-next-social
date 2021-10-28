@@ -9,6 +9,7 @@ import Link from "next/link";
 
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
 import ReactTimeAgo from "react-time-ago";
 
 export default function PostFeed() {
@@ -51,7 +52,12 @@ export default function PostFeed() {
         <Post post={post} key={post.id} user={user} />
       ))}
 
-      <button onClick={() => setLimit((c) => c + 2)}>Loadmore</button>
+      <button
+        onClick={() => setLimit((c) => c + 2)}
+        className="post__container__button"
+      >
+        Loadmore
+      </button>
     </div>
   );
 }
@@ -96,7 +102,7 @@ function Post({ post, user }) {
   return loading ? (
     <div>Loading...</div>
   ) : (
-    <div className="card">
+    <div className="card relative">
       <div className="card__head">
         <div>
           <div className="photo pointer">
@@ -157,6 +163,7 @@ function Post({ post, user }) {
 
 function PostMenu({ post, user }) {
   const [openMenu, setOpenMenu] = useState(false);
+  const [editContent, setEditContent] = useState(false);
   const menuRef = useClickOutSide(() => setOpenMenu(false));
   const deleteHandle = () => {
     const userConfirm = confirm("Are you sure you want to delete this post?");
@@ -178,6 +185,14 @@ function PostMenu({ post, user }) {
           </button>
           {openMenu ? (
             <ul>
+              <li
+                onClick={(e) => {
+                  setEditContent(true);
+                  setOpenMenu(false);
+                }}
+              >
+                <EditIcon /> Edit post
+              </li>
               <li onClick={deleteHandle}>
                 <DeleteForeverIcon /> Delete post
               </li>
@@ -185,7 +200,34 @@ function PostMenu({ post, user }) {
           ) : null}
         </div>
       ) : null}
+      {editContent ? (
+        <Editing post={post} setEditContent={setEditContent} />
+      ) : null}
     </div>
+  );
+}
+
+function Editing({ post, setEditContent }) {
+  const [content, setContent] = useState(post.content);
+  const editRef = useClickOutSide(() => setEditContent(false));
+
+  const updateContent = (e) => {
+    e.preventDefault();
+    if (content !== post.content && content !== "") {
+      firestore.collection("posts").doc(post.id).update({ content });
+      setEditContent(false);
+    }
+  };
+
+  return (
+    <form className="editpost" ref={editRef} onSubmit={updateContent}>
+      <input
+        type="text"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+      />
+      <button>Save</button>
+    </form>
   );
 }
 
