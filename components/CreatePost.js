@@ -3,6 +3,9 @@ import { UserContext } from "@utils/context";
 import { useForm } from "@utils/useForm";
 import { firestore, serverTimestamp, storage } from "@lib/firebase";
 import Image from "next/image";
+import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
+import toast from "react-hot-toast";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function CreatePost() {
   const { user } = useContext(UserContext);
@@ -28,7 +31,7 @@ export default function CreatePost() {
       const file = event.target.files[0];
 
       if (file.size > 3145728) {
-        console.log("FILE TO LARGE !");
+        toast.error("FILE TO LARGE !");
         return;
       }
       setImage(URL.createObjectURL(event.target.files[0]));
@@ -49,7 +52,9 @@ export default function CreatePost() {
         });
       });
     } else {
-      commitPost(null);
+      if (createForm.content === "")
+        toast.error("can't create post on empty string");
+      else commitPost(null);
     }
   }
 
@@ -64,24 +69,67 @@ export default function CreatePost() {
   };
 
   return (
-    <form onSubmit={createPost} className="card">
-      <input
-        type="text"
-        value={createForm.content}
-        onChange={onChange}
-        name="content"
-        placeholder={`What's on your mind, ${user.displayName}`}
-      />
-      <input
-        type="file"
-        onChange={onImageChange}
-        accept="image/jpeg,image/png,image/gif"
-      />
-      <div style={{ width: "100px", height: "100px", position: "relative" }}>
-        {image && <Image src={image} alt="preview image" layout="fill" />}
-      </div>
+    <div className="create">
+      <form onSubmit={createPost} className="card form__create">
+        <div className="form__create__title-group">
+          <div className="photo">
+            <Image
+              src={user.photoURL || "./default.png"}
+              layout="fill"
+              alt="profile-picture"
+            />
+          </div>
+          <input
+            type="text"
+            value={createForm.content}
+            onChange={onChange}
+            name="content"
+            placeholder={`What's on your mind, ${user.displayName}`}
+          />
+        </div>
+        {!image && (
+          <div className="form__create__upload-group">
+            <div className="image-upload">
+              <input
+                type="file"
+                onChange={onImageChange}
+                accept="image/jpeg,image/png,image/gif"
+              />
+              <div className="custom-file-upload">
+                <InsertPhotoIcon />
+                photo
+              </div>
+            </div>
+          </div>
+        )}
+        {image && (
+          <>
+            <div className="form__create__image-group">
+              <button
+                onClick={() => {
+                  setFile(null);
+                  setImage(null);
+                }}
+                className="form__create__image-group__clear-btn"
+              >
+                <CloseIcon />
+              </button>
+              <div className="post__photo">
+                <Image
+                  src={image}
+                  alt="preview image"
+                  width="680"
+                  height="640"
+                />
+              </div>
+            </div>
+          </>
+        )}
 
-      <button type="submit">create post</button>
-    </form>
+        <button type="submit" className="form__create__post">
+          Post
+        </button>
+      </form>
+    </div>
   );
 }

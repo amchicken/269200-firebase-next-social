@@ -31,11 +31,10 @@ export default function Index() {
           </ul>
         </div>
         <div className="index__center">
-          <h2>Create posts</h2>
           <CreatePost />
           <PostFeed />
         </div>
-        <div className="index__right">RIGHT</div>
+        <div className="index__right">Message</div>
       </div>
     </>
   );

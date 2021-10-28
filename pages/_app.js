@@ -5,6 +5,7 @@ import Auth from "@components/Auth";
 import EditProfile from "@components/EditProfile";
 import Header from "@components/Header";
 import TimeAgo from "javascript-time-ago";
+import { Toaster } from "react-hot-toast";
 
 import en from "javascript-time-ago/locale/en.json";
 
@@ -17,14 +18,17 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <UserContext.Provider value={{ user, updateUser }}>
-      <Header />
-      {!user.displayName ? (
-        <div>
-          FRIST TIME update displayName <EditProfile />
-        </div>
-      ) : (
-        <Component {...pageProps} />
-      )}
+      <>
+        <Header />
+        <Toaster />
+        {!user.displayName ? (
+          <div>
+            FRIST TIME update displayName <EditProfile />
+          </div>
+        ) : (
+          <Component {...pageProps} />
+        )}
+      </>
     </UserContext.Provider>
   );
 }

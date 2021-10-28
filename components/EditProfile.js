@@ -3,6 +3,7 @@ import { storage } from "@lib/firebase";
 import { useContext, useState } from "react";
 import { useForm } from "@utils/useForm";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 export default function EditProfile() {
   const { user, updateUser } = useContext(UserContext);
@@ -14,7 +15,7 @@ export default function EditProfile() {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       if (file.size > 3145728) {
-        console.log("FILE TO LARGE !");
+        toast.error("FILE TO LARGE !");
         return;
       }
       setImage(URL.createObjectURL(event.target.files[0]));
