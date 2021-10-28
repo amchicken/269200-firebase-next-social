@@ -1,5 +1,13 @@
 .index {
   justify-content: center;
+  @media only screen and (max-width: 1360px) {
+    padding-right: 280px;
+  }
+
+  @media only screen and (max-width: 960px) {
+    padding-right: 0;
+  }
+
   &__left {
     width: 280px;
     padding-top: 1rem;
@@ -36,7 +44,7 @@
       }
     }
 
-    @media only screen and (max-width: 960px) {
+    @media only screen and (max-width: 1360px) {
       display: none;
     }
   }
@@ -44,13 +52,16 @@
   &__center {
     width: 100%;
     max-width: 680px;
+    @media only screen and (max-width: 1360px) {
+      padding: 0 0.5rem;
+    }
   }
 
   &__right {
     position: fixed;
     right: 0;
     width: 280px;
-    @media only screen and (max-width: 680px) {
+    @media only screen and (max-width: 960px) {
       display: none;
     }
   }
