@@ -205,7 +205,7 @@ function Post({ post, user }) {
           </div>
         ))}
         {open ? (
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="form">
             <input
               type="text"
               value={comment}
