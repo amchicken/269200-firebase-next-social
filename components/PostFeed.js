@@ -16,7 +16,7 @@ export default function PostFeed() {
   const isCurrent = useRef(true);
   const { user } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(5);
 
   useEffect(() => {
     return () => {
@@ -63,6 +63,32 @@ export default function PostFeed() {
 }
 
 function Post({ post, user }) {
+  const [open, setOpen] = useState(false);
+  const [comment, setComent] = useState("");
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    firestore
+      .collection("posts")
+      .doc(post.id)
+      .update({
+        lastComment: {
+          userId: user.id,
+          userDisplayName: user.displayName,
+          userPhotoURL: user.photoURL,
+          content: comment,
+        },
+        comment: arrayUnion({
+          userId: user.id,
+          userDisplayName: user.displayName,
+          userPhotoURL: user.photoURL,
+          content: comment,
+        }),
+        comments: Increment(1),
+      });
+    setComent("");
+  };
+
   const authorData = () => {
     firestore
       .collection("usernames")
@@ -154,8 +180,39 @@ function Post({ post, user }) {
         </div>
         <div>{post.comments > 0 ? <>{post.comments} comment</> : null}</div>
       </div>
-      <div>
+      <div style={{ display: "flex", justifyContent: "space-around" }}>
         <LikeButton post={post} />
+        <button onClick={() => setOpen(true)}>comment</button>
+      </div>
+      <div>
+        {post.comment?.map((doc, idx) => (
+          <div key={idx} className="commnets">
+            <Link href={`/${doc.userId}`} passHref>
+              <>
+                <div className="img">
+                  <Image
+                    src={doc.userPhotoURL || "/default.png"}
+                    width="30"
+                    height="30"
+                    alt="notFound"
+                  />
+                </div>
+                <h3>{doc.userDisplayName}</h3>
+              </>
+            </Link>
+            {"  "}
+            {doc.content}
+          </div>
+        ))}
+        {open ? (
+          <form onSubmit={onSubmit}>
+            <input
+              type="text"
+              value={comment}
+              onChange={(e) => setComent(e.target.value)}
+            />
+          </form>
+        ) : null}
       </div>
     </div>
   );

@@ -19,6 +19,7 @@ export default function CreatePost() {
     lastLike: null,
     like: [],
     likes: 0,
+    comment: [],
     comments: 0,
   };
 

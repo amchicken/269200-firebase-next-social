@@ -137,6 +137,21 @@ input {
   max-width: 680px;
 }
 
+.commnets {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  span {
+    font-size: bolder;
+  }
+  .img {
+    border-radius: 50%;
+    img {
+      border-radius: 50%;
+    }
+  }
+}
+
 @import "auth";
 @import "nav";
 @import "index";
